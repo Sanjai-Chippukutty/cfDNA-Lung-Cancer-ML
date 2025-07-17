@@ -1,1 +1,1 @@
-Download full dataset from: [Google Drive / Zenodo / Kaggle link]
+Download full dataset from [Google Drive]
