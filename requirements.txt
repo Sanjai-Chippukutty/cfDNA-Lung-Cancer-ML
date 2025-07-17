@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 pandas
 numpy
 scikit-learn
 matplotlib
 seaborn
 notebook
+=======
+# Required Python packages
+>>>>>>> 0c712769fce31a4c038fb7030c579c50598ea6f4
