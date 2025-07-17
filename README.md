@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ### Integrative Analysis of cfDNA Methylation and miRNA Expression for Early Lung Cancer Detection Using Machine Learning
 # Overview
 This project focuses on the early detection of lung cancer using an integrated analysis of two powerful non-invasive biomarkers:
@@ -126,6 +126,19 @@ Amrita School of Boitechnology, Amrita Vishwa Vidyapeetham
 University of Arizona
 
 Email: sanjaichippukutty@gmail.com
+## 📌 Citation
+
+If you use this repository for your research, please cite it using:
+
+```bibtex
+@misc{chippukutty2025cfDNAmiRNA,
+  author       = {Sanjai Chippukutty},
+  title        = {Integrative Analysis of cfDNA Methylation and miRNA Expression for Early Cancer Detection Using Machine Learning},
+  year         = {2025},
+  url          = {https://github.com/Sanjai-Chippukutty/cfDNA-Lung-Cancer-ML},
+  note         = {GitHub repository}
+}
+
 
 
 
