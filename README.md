@@ -126,9 +126,8 @@ Amrita School of Boitechnology, Amrita Vishwa Vidyapeetham
 University of Arizona
 
 Email: sanjaichippukutty@gmail.com
-## 📌 Citation
+##  Citation
 
-If you use this repository for your research, please cite it using:
 
 ```bibtex
 @misc{chippukutty2025cfDNAmiRNA,
@@ -140,11 +139,6 @@ If you use this repository for your research, please cite it using:
 }
 
 
-
-
-
-
-=======
 # cfDNA-Lung-Cancer-ML
 Integrative analysis of cfDNA methylation and miRNA expression for early lung cancer detection using machine learning.
->>>>>>> 0c712769fce31a4c038fb7030c579c50598ea6f4
+
