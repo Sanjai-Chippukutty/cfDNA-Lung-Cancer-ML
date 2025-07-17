@@ -1,0 +1,22 @@
+# Ignore Python cache and logs
+__pycache__/
+*.pyc
+*.log
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore environment files
+.env
+*.env
+
+# Ignore OS-generated files
+.DS_Store
+
+# Ignore SQLite databases and pickle files
+*.sqlite3
+*.pkl
+
+# Ignore large compressed data files
+*.zip
+*.gz
