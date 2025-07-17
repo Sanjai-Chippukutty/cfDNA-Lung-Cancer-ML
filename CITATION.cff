@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this project for academic or research purposes, please cite it as below."
+title: "Integrative Analysis of cfDNA Methylation and miRNA Expression for Early Cancer Detection Using Machine Learning"
+authors:
+  - family-names: Chippukutty
+    given-names: Sanjai
+    affiliation: University of Arizona
+    orcid: https://orcid.org/0000-0000-0000-0000  # Replace with your real ORCID if available
+date-released: 2025-07-20
+version: "1.0"
+url: https://github.com/Sanjai-Chippukutty/cfDNA-Lung-Cancer-ML
+repository-code: https://github.com/Sanjai-Chippukutty/cfDNA-Lung-Cancer-ML
+keywords:
+  - cfDNA
+  - miRNA
+  - cancer detection
+  - machine learning
+  - bioinformatics
+  - liquid biopsy
