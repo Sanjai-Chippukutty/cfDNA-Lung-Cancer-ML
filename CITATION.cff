@@ -5,7 +5,6 @@ authors:
   - family-names: Chippukutty
     given-names: Sanjai
     affiliation: University of Arizona
-    orcid: https://orcid.org/0000-0000-0000-0000  # Replace with your real ORCID if available
 date-released: 2025-07-20
 version: "1.0"
 url: https://github.com/Sanjai-Chippukutty/cfDNA-Lung-Cancer-ML
