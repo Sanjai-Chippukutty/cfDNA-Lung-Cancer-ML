@@ -1,4 +1,9 @@
 ![Project Banner](Project_banner.png)
+![License](https://img.shields.io/github/license/Sanjai-Chippukutty/cfDNA-Lung-Cancer-ML)
+![Made With](https://img.shields.io/badge/Made%20with-Python%20%7C%20ML-blue)
+![Repo Size](https://img.shields.io/github/repo-size/Sanjai-Chippukutty/cfDNA-Lung-Cancer-ML)
+![Last Commit](https://img.shields.io/github/last-commit/Sanjai-Chippukutty/cfDNA-Lung-Cancer-ML)
+![Stars](https://img.shields.io/github/stars/Sanjai-Chippukutty/cfDNA-Lung-Cancer-ML?style=social)
 
 ### Integrative Analysis of cfDNA Methylation and miRNA Expression for Early Lung Cancer Detection Using Machine Learning
 # Overview
