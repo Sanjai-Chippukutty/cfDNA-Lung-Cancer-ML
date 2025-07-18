@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="Project_banner.png" alt="Project Banner" width="80%">
-</p>
-
 ![Project Banner](Project_banner.png)
 ![License](https://img.shields.io/github/license/Sanjai-Chippukutty/cfDNA-Lung-Cancer-ML)
 ![Made With](https://img.shields.io/badge/Made%20with-Python%20%7C%20ML-blue)
