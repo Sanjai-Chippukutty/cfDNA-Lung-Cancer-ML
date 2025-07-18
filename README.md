@@ -1,3 +1,4 @@
+![Project Banner](Project_banner.png)
 
 ### Integrative Analysis of cfDNA Methylation and miRNA Expression for Early Lung Cancer Detection Using Machine Learning
 # Overview
