@@ -3,6 +3,7 @@
 ![Made With](https://img.shields.io/badge/Made%20with-Python%20%7C%20ML-blue)
 ![Repo Size](https://img.shields.io/github/repo-size/Sanjai-Chippukutty/cfDNA-Lung-Cancer-ML)
 ![Last Commit](https://img.shields.io/github/last-commit/Sanjai-Chippukutty/cfDNA-Lung-Cancer-ML)
+[![Streamlit App](https://img.shields.io/badge/Streamlit-Live--Demo-orange?logo=streamlit)](https://cfDNA-miRNA-lungcancer.streamlit.app/)
 ![Stars](https://img.shields.io/github/stars/Sanjai-Chippukutty/cfDNA-Lung-Cancer-ML?style=social)
 
 ### Integrative Analysis of cfDNA Methylation and miRNA Expression for Early Lung Cancer Detection Using Machine Learning
@@ -116,6 +117,9 @@ The app accepts scaled cfDNA and miRNA expression values and classifies the inpu
 -> Normal
 
 -> Lung Cancer
+
+5.  **Live Demo**: [Click here to view the deployed app](https://cfDNA-miRNA-lungcancer.streamlit.app/)
+
 
 ## References
  
