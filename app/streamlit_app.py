@@ -1,51 +1,82 @@
-# Streamlit app will go here
-# streamlit_app.py
-
 import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
+import os
 
-# Load saved models
-model_path = r"C:\Users\sanja\cfDNA_LungCancer_ML\models"
-model = joblib.load(model_path + r"\random_forest_model.pkl")
-imputer = joblib.load(model_path + r"\imputer.pkl")
-scaler = joblib.load(model_path + r"\scaler.pkl")
+# Page config
+st.set_page_config(page_title="Lung Cancer Detection Using cfDNA + miRNA", layout="centered")
 
-st.set_page_config(page_title="Lung Cancer Detection", layout="wide")
-st.title("🧬 Lung Cancer Prediction using cfDNA & miRNA")
+st.title("🧬 Lung Cancer Detection Using cfDNA + miRNA")
+st.markdown("Upload your cfDNA methylation + miRNA expression data to get lung cancer prediction using our ML model.")
 
-st.markdown("""
-This app predicts whether a patient sample indicates **Lung Cancer or Normal** based on **cfDNA methylation** and **miRNA expression** data.
-""")
+# Model loading
+@st.cache_resource
+def load_model():
+    base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "models"))
+    model = joblib.load(os.path.join(base_path, "random_forest_model.pkl"))
+    imputer = joblib.load(os.path.join(base_path, "imputer.pkl"))
+    scaler = joblib.load(os.path.join(base_path, "scaler.pkl"))
+    return model, imputer, scaler
 
-st.subheader("📥 Enter Feature Values")
+model, imputer, scaler = load_model()
 
-# Load column names from your merged dataset
-merged_df = pd.read_csv(r"C:\Users\sanja\cfDNA_LungCancer_ML\data\processed\merged_labeled_light.csv", index_col=0)
-feature_columns = merged_df.drop(columns=['Label']).columns.tolist()
+# Feature names
+REQUIRED_FEATURES = ['gene1', 'gene2', 'gene3', 'miRNA_21', 'miRNA_34a']
 
-# Input fields dynamically
-input_values = []
-cols = st.columns(3)
-for i, col in enumerate(feature_columns[:15]):  # limit to 15 features for demo
-    val = cols[i % 3].number_input(f"{col}", value=0.0)
-    input_values.append(val)
+# CSV Upload section
+st.header("📂 Upload a CSV file with matching features")
+uploaded_file = st.file_uploader("Upload CSV", type=["csv"])
 
-if st.button("🔍 Predict"):
-    # Convert input to DataFrame
-    input_df = pd.DataFrame([input_values], columns=feature_columns[:15])
+if uploaded_file:
+    try:
+        df = pd.read_csv(uploaded_file)
+        missing = [feat for feat in REQUIRED_FEATURES if feat not in df.columns]
+        if missing:
+            st.error(f"Missing required features: {missing}")
+        else:
+            input_data = df[REQUIRED_FEATURES]
+            input_imputed = imputer.transform(input_data)
+            input_scaled = scaler.transform(input_imputed)
+            predictions = model.predict(input_scaled)
+            probabilities = model.predict_proba(input_scaled)[:, 1]
 
-    # Impute and scale
-    input_imputed = imputer.transform(input_df)
-    input_scaled = scaler.transform(input_imputed)
+            st.subheader("📊 Prediction Results")
+            result_df = pd.DataFrame({
+                "Prediction": ["High" if p == 1 else "Low" for p in predictions],
+                "Probability (%)": [f"{prob*100:.2f}" for prob in probabilities]
+            })
+            st.dataframe(result_df)
 
-    # Predict
-    prediction = model.predict(input_scaled)[0]
-    prob = model.predict_proba(input_scaled)[0][prediction]
+    except Exception as e:
+        st.error(f"⚠️ Error reading the file: {e}")
 
-    label = "🟥 Lung Cancer" if prediction == 1 else "🟩 Normal"
+# Manual input section
+st.header("✍️ Or Enter Values Manually")
 
-    st.markdown(f"### 🧾 Prediction: **{label}**")
-    st.markdown(f"Confidence: `{prob:.2%}`")
+with st.form("manual_input_form"):
+    manual_values = []
+    for feature in REQUIRED_FEATURES:
+        val = st.number_input(f"{feature}", min_value=0.0, step=0.01, format="%.4f")
+        manual_values.append(val)
+    submit = st.form_submit_button("Predict")
+
+if submit:
+    try:
+        input_array = np.array(manual_values).reshape(1, -1)
+        input_imputed = imputer.transform(input_array)
+        input_scaled = scaler.transform(input_imputed)
+        prediction = model.predict(input_scaled)[0]
+        probability = model.predict_proba(input_scaled)[0][1]
+
+        st.subheader("🔍 Manual Prediction Result")
+        if prediction == 1:
+            st.error(f"High probability of Lung Cancer.")
+        else:
+            st.success(f"Low probability of Lung Cancer.")
+        st.write(f"**Probability of Cancer:** `{probability * 100:.2f}%`")
+
+    except Exception as e:
+        st.error(f"⚠️ Error during manual prediction: {e}")
+
 
