@@ -97,10 +97,18 @@ Random Forest highlighted top 20 important integrated features. All models showe
  ##  Project Workflow
 
 This section outlines the complete workflow for our integrative analysis project on **cfDNA methylation and miRNA expression** for early lung cancer detection using machine learning:
+##  Project Workflow
+
+The following flowchart outlines the complete pipeline of this project:
+
+<p align="center">
+  <img src="Workflow_Diagram.png" alt="Project Workflow" width="700"/>
+</p>
+
 
 ###  Overview Diagram
 
-![Project Workflow]git add Workflow_Diagram.png README.md
+Workflow_Diagram.png README.md
 
 ###  Step-by-Step Workflow
 
