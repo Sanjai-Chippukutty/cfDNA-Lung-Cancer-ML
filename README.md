@@ -66,6 +66,48 @@ cfDNA_LungCancer_ML/
 
 6. Data Source: TCGA-LUAD datasets
 
+##  Datasets
+
+This project uses two primary datasets focused on early-stage lung cancer detection through blood-based biomarkers:
+
+---
+
+### 1. **cfDNA Methylation Dataset**
+
+- **Type**: Cell-free DNA (cfDNA) methylation beta-values  
+- **Source**: Public repository (GEO / published supplementary data)  
+- **Shape**: 200+ samples × ~10,000 CpG sites  
+- **Preprocessing**:
+  - Removed low-variance CpGs  
+  - Filtered NA/missing values  
+  - Normalized values if necessary  
+- **Target Labels**: `Benign` vs `Malignant` (based on clinical metadata)
+
+---
+
+### 2. **miRNA Expression Dataset**
+
+- **Type**: Circulating miRNA expression profiles from patient plasma/serum  
+- **Source**: Public domain / research publication  
+- **Shape**: 200+ samples × ~300 miRNAs  
+- **Preprocessing**:
+  - Removed low-expression features  
+  - Filtered missing values  
+  - Log-transformation applied  
+- **Target Labels**: Aligned to cfDNA samples via patient ID
+
+---
+
+###  Merged Dataset
+
+After aligning both datasets by patient ID, a **merged matrix** was created containing:
+- cfDNA methylation features  
+- miRNA expression features  
+- Combined target label (Benign vs Malignant)
+
+This merged dataset was used for feature selection and model training.
+
+
 ## Models Trained
 
 1. Logistic Regression
