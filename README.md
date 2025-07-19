@@ -100,7 +100,7 @@ This section outlines the complete workflow for our integrative analysis project
 
 ###  Overview Diagram
 
-![Project Workflow](A_flowchart_in_the_image_illustrates_the_workflow_.png)
+![Project Workflow]git add Workflow_Diagram.png README.md
 
 ###  Step-by-Step Workflow
 
