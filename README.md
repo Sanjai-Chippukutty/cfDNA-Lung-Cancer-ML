@@ -92,7 +92,53 @@ cfDNA_LungCancer_ML/
 | Random Forest       | \~75%    | 0.84      |
 | SVM (RBF Kernel)    | \~73%    | 0.82      |
 
-Random Forest highlighted top 20 important integrated features. All models showed balanced performance
+Random Forest highlighted top 20 important integrated features. All models showed balanced performance.
+
+ ##  Project Workflow
+
+This section outlines the complete workflow for our integrative analysis project on **cfDNA methylation and miRNA expression** for early lung cancer detection using machine learning:
+
+###  Overview Diagram
+
+![Project Workflow](A_flowchart_in_the_image_illustrates_the_workflow_.png)
+
+###  Step-by-Step Workflow
+
+1. **Data Collection**  
+   - **cfDNA Methylation Data** and **miRNA Expression Data** were gathered from curated sources and stored in structured CSV formats.
+
+2. **Data Preprocessing**  
+   - Cleaned missing values, normalized features, and merged datasets using a common identifier.
+   - Final processed file: \`merged_labeled_light.csv\`
+
+3. **Feature Engineering**  
+   - Selected most informative features from both cfDNA and miRNA matrices.
+   - Removed non-informative or redundant columns.
+
+4. **Label Assignment**  
+   - Assigned binary labels:
+     - \`0\`: Healthy/Control  
+     - \`1\`: Cancer/Affected
+
+5. **Model Training and Evaluation**  
+   - Built multiple ML models (Random Forest, XGBoost, etc.).
+   - Performed hyperparameter tuning and cross-validation.
+   - Selected best model based on **accuracy**, **F1-score**, and **ROC-AUC**.
+
+6. **Streamlit App Development**  
+   - Developed an interactive web app using Streamlit.
+   - Includes:
+     - Visualizations
+     - Model metrics
+     - Live prediction area for user input
+   - Integrated with GitHub and deployed via Streamlit Cloud.
+
+7. **Documentation & Deployment**  
+   - Full codebase documented and version-controlled on GitHub.
+   - Results visualized and interpreted.
+   - Repository structured for reuse and reproducibility.
+
+
 
 ## How to Run the Project
 
