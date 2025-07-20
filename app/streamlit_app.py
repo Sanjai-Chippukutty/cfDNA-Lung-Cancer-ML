@@ -10,16 +10,13 @@ st.set_page_config(page_title="Lung Cancer Detection Using cfDNA + miRNA", layou
 st.title("🧬 Lung Cancer Detection Using cfDNA + miRNA")
 st.markdown("Upload your cfDNA methylation + miRNA expression data to get lung cancer prediction using our ML model.")
 
-# ✅ Load model and preprocessing tools
 @st.cache_resource
 def load_model():
-    # TEMP: Using absolute paths to fix FileNotFoundError
-    model = joblib.load("C:/Users/sanja/cfDNA-Lung-Cancer-ML/models/random_forest_model.pkl")
-    imputer = joblib.load("C:/Users/sanja/cfDNA-Lung-Cancer-ML/models/imputer.pkl")
-    scaler = joblib.load("C:/Users/sanja/cfDNA-Lung-Cancer-ML/models/scaler.pkl")
+    model = joblib.load("models/random_forest_model.pkl")
+    imputer = joblib.load("models/imputer.pkl")
+    scaler = joblib.load("models/scaler.pkl")
     return model, imputer, scaler
-
-model, imputer, scaler = load_model()
+    model, imputer, scaler = load_model()
 
 # ✅ Define required features
 REQUIRED_FEATURES = ['gene1', 'gene2', 'gene3', 'miRNA_21', 'miRNA_34a']
