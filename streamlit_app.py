@@ -5,96 +5,81 @@ import numpy as np
 import joblib
 import os
 
-# Page config
-st.set_page_config(
-    page_title="Lung Cancer Detection App",
-    layout="centered"
-)
+# ✅ Page config
+st.set_page_config(page_title="Lung Cancer Detection Using cfDNA + miRNA", layout="centered")
 
-st.title("🧬 Lung Cancer Detection using cfDNA Methylation & miRNA Signatures")
-st.markdown("Upload a CSV file _or_ manually enter data to predict lung cancer probability using a trained ML model.")
+# ✅ Title
+st.title("🧬 Lung Cancer Detection Using cfDNA + miRNA")
+st.markdown("Upload your cfDNA methylation + miRNA expression data to get lung cancer prediction using our ML model.")
 
-# Load model, imputer, scaler
-try:
-    base_model_dir = os.path.join(os.path.dirname(__file__), "..", "models")
+# ✅ Load model and preprocessing tools
+@st.cache_resource
+def load_model():
+    base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "models"))
+    model = joblib.load(os.path.join(base_path, "random_forest_model.pkl"))
+    imputer = joblib.load(os.path.join(base_path, "imputer.pkl"))
+    scaler = joblib.load(os.path.join(base_path, "scaler.pkl"))
+    return model, imputer, scaler
 
-    model = joblib.load(os.path.join(base_model_dir, "final_model.pkl"))
-    imputer = joblib.load(os.path.join(base_model_dir, "imputer.pkl"))
-    scaler = joblib.load(os.path.join(base_model_dir, "scaler.pkl"))
+model, imputer, scaler = load_model()
 
-except Exception as e:
-    st.error(f"❌ Error loading model files: {e}")
-    st.stop()
+# ✅ Define required features
+REQUIRED_FEATURES = ['gene1', 'gene2', 'gene3', 'miRNA_21', 'miRNA_34a']
 
-# Load feature names
-data_path = os.path.join(os.path.dirname(__file__), "..", "data", "processed", "merged_labeled_light.csv")
-try:
-    merged_df = pd.read_csv(data_path, index_col=0)
-    feature_columns = merged_df.drop(columns=["Label"]).columns.tolist()
-except Exception:
-    st.warning("⚠️ Dataset not found. Using default feature names.")
-    feature_columns = ['gene1', 'gene2', 'gene3', 'miRNA_21', 'miRNA_34a']  # Customize based on your model
-
-# --- Section 1: File Upload ---
-st.header("📂 Upload CSV File")
-uploaded_file = st.file_uploader("Upload a CSV file with correct feature columns", type=["csv"])
+# ✅ Upload CSV section
+st.header("📂 Upload a CSV file with matching features")
+uploaded_file = st.file_uploader("Upload CSV", type=["csv"])
 
 if uploaded_file:
     try:
         df = pd.read_csv(uploaded_file)
+        # Fix columns if uploaded file has spaces
+        df.columns = df.columns.str.strip().str.replace(" ", "_")
 
-        # Check feature compatibility
-        missing = [f for f in feature_columns if f not in df.columns]
+        missing = [feat for feat in REQUIRED_FEATURES if feat not in df.columns]
         if missing:
-            st.error(f"❌ Missing required features: {missing}")
-            st.stop()
+            st.error(f"Missing required features: {missing}")
+        else:
+            input_data = df[REQUIRED_FEATURES]
+            input_imputed = imputer.transform(input_data)
+            input_scaled = scaler.transform(input_imputed)
+            predictions = model.predict(input_scaled)
+            probabilities = model.predict_proba(input_scaled)[:, 1]
 
-        input_data = df[feature_columns]
-        imputed = imputer.transform(input_data)
-        scaled = scaler.transform(imputed)
-
-        predictions = model.predict(scaled)
-        probs = model.predict_proba(scaled)[:, 1]
-
-        df["Prediction"] = predictions
-        df["Cancer_Probability"] = probs
-
-        st.subheader("✅ Batch Prediction Results")
-        st.dataframe(df[["Prediction", "Cancer_Probability"]])
-
-        csv = df.to_csv(index=False).encode("utf-8")
-        st.download_button("📥 Download Results as CSV", data=csv, file_name="batch_predictions.csv")
+            st.subheader("📊 Prediction Results")
+            result_df = pd.DataFrame({
+                "Prediction": ["High" if p == 1 else "Low" for p in predictions],
+                "Probability (%)": [f"{prob * 100:.2f}" for prob in probabilities]
+            })
+            st.dataframe(result_df)
 
     except Exception as e:
-        st.error(f"❌ Error processing file: {e}")
+        st.error(f"⚠️ Error reading the file: {e}")
 
-# --- Section 2: Manual Input ---
-st.header("📝 Or Manually Enter Values")
+# ✅ Manual input section
+st.header("✍️ Or Enter Values Manually")
 
 with st.form("manual_input_form"):
-    user_input = []
-    for feature in feature_columns:
-        val = st.number_input(f"{feature}", min_value=0.0, max_value=1_000_000.0, step=0.01)
-        user_input.append(val)
+    manual_values = []
+    for feature in REQUIRED_FEATURES:
+        val = st.number_input(f"{feature}", min_value=0.0, step=0.01, format="%.4f")
+        manual_values.append(val)
+    submit = st.form_submit_button("Predict")
 
-    predict_btn = st.form_submit_button("🔍 Predict from Manual Input")
-
-if predict_btn:
+if submit:
     try:
-        input_array = np.array(user_input).reshape(1, -1)
+        input_array = np.array(manual_values).reshape(1, -1)
         input_imputed = imputer.transform(input_array)
         input_scaled = scaler.transform(input_imputed)
-
         prediction = model.predict(input_scaled)[0]
-        prob = model.predict_proba(input_scaled)[0][1]
+        probability = model.predict_proba(input_scaled)[0][1]
 
-        st.subheader("✅ Manual Prediction Result")
+        st.subheader("🔍 Manual Prediction Result")
         if prediction == 1:
-            st.error(f"High risk of Lung Cancer predicted. 🔴")
+            st.error("High probability of Lung Cancer.")
         else:
-            st.success(f"Low risk of Lung Cancer predicted. 🟢")
-        st.write(f"**Predicted Probability:** `{prob * 100:.2f}%`")
+            st.success("Low probability of Lung Cancer.")
+        st.write(f"**Probability of Cancer:** `{probability * 100:.2f}%`")
 
     except Exception as e:
-        st.error(f"❌ Error during manual prediction: {e}")
-
+        st.error(f"⚠️ Error during manual prediction: {e}")

@@ -2,29 +2,29 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
-import os
 
-# Page config
+# ✅ Page config
 st.set_page_config(page_title="Lung Cancer Detection Using cfDNA + miRNA", layout="centered")
 
+# ✅ Title and instructions
 st.title("🧬 Lung Cancer Detection Using cfDNA + miRNA")
 st.markdown("Upload your cfDNA methylation + miRNA expression data to get lung cancer prediction using our ML model.")
 
-# Model loading
+# ✅ Load model and preprocessing tools
 @st.cache_resource
 def load_model():
-    base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "models"))
-    model = joblib.load(os.path.join(base_path, "random_forest_model.pkl"))
-    imputer = joblib.load(os.path.join(base_path, "imputer.pkl"))
-    scaler = joblib.load(os.path.join(base_path, "scaler.pkl"))
+    # TEMP: Using absolute paths to fix FileNotFoundError
+    model = joblib.load("C:/Users/sanja/cfDNA-Lung-Cancer-ML/models/random_forest_model.pkl")
+    imputer = joblib.load("C:/Users/sanja/cfDNA-Lung-Cancer-ML/models/imputer.pkl")
+    scaler = joblib.load("C:/Users/sanja/cfDNA-Lung-Cancer-ML/models/scaler.pkl")
     return model, imputer, scaler
 
 model, imputer, scaler = load_model()
 
-# Feature names
+# ✅ Define required features
 REQUIRED_FEATURES = ['gene1', 'gene2', 'gene3', 'miRNA_21', 'miRNA_34a']
 
-# CSV Upload section
+# ✅ Upload CSV section
 st.header("📂 Upload a CSV file with matching features")
 uploaded_file = st.file_uploader("Upload CSV", type=["csv"])
 
@@ -44,14 +44,14 @@ if uploaded_file:
             st.subheader("📊 Prediction Results")
             result_df = pd.DataFrame({
                 "Prediction": ["High" if p == 1 else "Low" for p in predictions],
-                "Probability (%)": [f"{prob*100:.2f}" for prob in probabilities]
+                "Probability (%)": [f"{prob * 100:.2f}" for prob in probabilities]
             })
             st.dataframe(result_df)
 
     except Exception as e:
         st.error(f"⚠️ Error reading the file: {e}")
 
-# Manual input section
+# ✅ Manual input section
 st.header("✍️ Or Enter Values Manually")
 
 with st.form("manual_input_form"):
@@ -71,12 +71,10 @@ if submit:
 
         st.subheader("🔍 Manual Prediction Result")
         if prediction == 1:
-            st.error(f"High probability of Lung Cancer.")
+            st.error("High probability of Lung Cancer.")
         else:
-            st.success(f"Low probability of Lung Cancer.")
+            st.success("Low probability of Lung Cancer.")
         st.write(f"**Probability of Cancer:** `{probability * 100:.2f}%`")
 
     except Exception as e:
         st.error(f"⚠️ Error during manual prediction: {e}")
-
-
