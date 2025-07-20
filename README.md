@@ -15,6 +15,15 @@ This project focuses on the early detection of lung cancer using an integrated a
  [Click here to try the Streamlit app](https://cfdna-lung-cancer-ml-gytw4zojirf3wkqxycoakp.streamlit.app/)
 
  This app uses a trained Random Forest model on cfDNA methylation + miRNA expression features (`gene1`, `gene2`, `gene3`, `miRNA_21`, `miRNA_34a`) to predict lung cancer probability.
+ ###  App Interface
+![App UI](screenshots/app_ui.png)
+
+###  High Risk Prediction
+![High Risk Prediction](screenshots/high_risk.png)
+
+###  Low Risk Prediction
+![Low Risk Prediction](screenshots/low_risk.png)
+
 
 
 Cell-free DNA (cfDNA) methylation profiles
