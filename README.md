@@ -8,7 +8,14 @@
 
 ### Integrative Analysis of cfDNA Methylation and miRNA Expression for Early Lung Cancer Detection Using Machine Learning
 # Overview
-This project focuses on the early detection of lung cancer using an integrated analysis of two powerful non-invasive biomarkers:
+This project focuses on the early detection of lung cancer using an integrated analysis of two powerful non-invasive biomarkers
+
+##  Live Demo
+
+ [Click here to try the Streamlit app](https://cfdna-lung-cancer-ml-gytw4zojirf3wkqxycoakp.streamlit.app/)
+
+ This app uses a trained Random Forest model on cfDNA methylation + miRNA expression features (`gene1`, `gene2`, `gene3`, `miRNA_21`, `miRNA_34a`) to predict lung cancer probability.
+
 
 Cell-free DNA (cfDNA) methylation profiles
 
