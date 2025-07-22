@@ -220,8 +220,6 @@ The app accepts scaled cfDNA and miRNA expression values and classifies the inpu
 
 -> Lung Cancer
 
-5.  **Live Demo**: [Click here to view the deployed app](https://cfDNA-miRNA-lungcancer.streamlit.app/)
-
 
 ## References
  
